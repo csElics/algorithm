@@ -5,8 +5,15 @@
 #include<sstream>
 using namespace std;
 
+
+void print(vector<int> input) {
+    for(int i = 0;i < input.size(); i++) {
+    	cout << input.at(i) << endl;
+    }
+}
+
 // 快排
-vector<int> quickSort(vector<int> input, int start, int end) {
+vector<int> quickSort(vector<int>& input, int start, int end) {
     // 边界
     if (input.size() <= 1 || start >= end) {
         return input;
@@ -16,20 +23,20 @@ vector<int> quickSort(vector<int> input, int start, int end) {
     int i = start;
     int j = end;
     while (i < j) {
-        while (input[i] <= q && i < j) {
+        while (input[i + 1] <= q && i < j) {
             i++;
         }
-        while (input[j] > q && j > start) {
+        while (input[j] > q && i < j) {
             j--;
         }
         if (i < j) {
-            swap(input[i], input[j]);
+            swap(input[i + 1], input[j]);
         }
     }
-    swap(input[j], input[start]);
+    swap(input[i], input[start]);
 
-    quickSort(input, start, j - 1);
-    quickSort(input, j + 1, end);
+    quickSort(input, start, i - 1);
+    quickSort(input, i + 1, end);
 
     return input;
 }
@@ -46,9 +53,7 @@ int main() {
 
     input = quickSort(input, 0, input.size() - 1);
     cout << "result: " << endl;
-    for(int i = 0;i < input.size(); i++) {
-    	cout << input.at(i) << endl;
-    }
+    print(input);
 
     return 0;
 }
